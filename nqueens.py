@@ -1,40 +1,43 @@
-def n_queen(n):
-    col = set()
-    posDiag = set()
-    negDiag = set()
+def n_queens(n):
+    left = set()
+    upper = set()
+    lower = set()
     
+    board = [["0"]*n for row in range(n)]
     res = []
-    
-    board = [["0"]*n for i in range(n)]
-    def backtrack(r):
-        if r==n:
+    def backtrack(col):
+        if col == n:
             copy = [" ".join(row) for row in board]
             res.append(copy)
             return
         
-        for c in range(n):
-            if c in col or (r+c) in posDiag or (r-c) in negDiag:
+        for row in range(n):
+            if row in left or (row + col) in lower or (n - 1 + col - row) in upper:
                 continue
             
-            col.add(c)
-            posDiag.add(r+c)
-            negDiag.add(r-c)
-            board[r][c]="1"
+            board[row][col] = "1"
+            left.add(row)
+            lower.add(row + col)
+            upper.add(n - 1 + col - row)
             
-            backtrack(r+1)
+            backtrack(col + 1)
             
-            col.remove(c)
-            posDiag.remove(r+c)
-            negDiag.remove(r-c)
-            board[r][c]="0"
+            board[row][col] = "0"
+            left.remove(row)
+            lower.remove(row + col)
+            upper.remove(n - 1 + col - row)
+        
     backtrack(0)
-    
+    count = 0   
     for sol in res:
         for row in sol:
-            print(row)
+            
+            print(row, " ")
         print()
+        count = count + 1
+    print(count)
+            
     
-    
-if _name=="main_":
-    n=int(input("Enter the value of N :"))
-    n_queen(n)
+if __name__ == "__main__":
+    n = int(input("Enter the number of queens"))
+    n_queens(n)
