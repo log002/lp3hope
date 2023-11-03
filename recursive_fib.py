@@ -5,7 +5,7 @@ def fabonacci_recursive(n):
         return n
     else:
         return fabonacci_recursive(n-1) + fabonacci_recursive(n-2)
-if _name=="main_":
+if __name__ == "__main__":
     n = input("Enter the number :")
     n=int(n)
     for i in range(n):
