@@ -1,11 +1,11 @@
 class Item:
-    def _init_(self,value,weight):
+    def __init__(self,value,weight):
         self.weight=weight
         self.value=value
         self.ratio=value/weight
         
     
-    def knapsack(items,capacity):
+def knapsack(items,capacity):
         items.sort(key=lambda x:x.ratio,reverse=True)
         
         def bound(i,current_weight,current_value):
