@@ -9,10 +9,7 @@ def fib_iterative(n):
         first = second
         second = third
         n -= 1
-
-
 if __name__ == "__main__":
     n = input("Enter the value of n: ")
     n = int(n)
-    
     fib_iterative(n)
