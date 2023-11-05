@@ -1,44 +1,53 @@
 import heapq
-class Node:
+
+class node:
     def __init__(self, freq, symbol, left = None, right = None):
         self.freq = freq
         self.symbol = symbol
-        self.right = right
         self.left = left
+        self.right = right
         self.huff = ''
     
     def __lt__(self, nxt):
         return self.freq < nxt.freq
 
-    
-def printNodes(root, val = ''):
-    newVal = val + str(root.huff)
-    
-    if root.left:
-        printNodes(root.left, newVal)
-    if root.right:
-        printNodes(root.right, newVal)
-    
-    if not root.left and not root.right:
-        print(f"{root.symbol} -> {newVal}")
+def printNodes(node, val=''):
+    newVal = val + str(node.huff)
+    if node.left:
+        printNodes(node.left, newVal)
+    if node.right:
+        printNodes(node.right, newVal)
+    if not node.left and not node.right:
+        print("{}->{}".format(node.symbol, newVal))
 
-chars = ['a', 'b', 'c', 'd', 'e', 'f']
-freq = [5, 9, 12, 13, 16, 45]
-
-nodes = []
-
-for x in range(len(chars)):
-    heapq.heappush(nodes, Node(freq[x], chars[x]))
-
-while len(nodes) > 1:
-    left = heapq.heappop(nodes)
-    right = heapq.heappop(nodes)
+if __name__ == "__main__":
+    s = input("Enter the String: ")
+    res = {}
     
-    left.huff = 0
-    right.huff = 1
+    for i in s:
+        if(i == ' '):
+            continue
+        res[i] = res.get(i, 0) + 1
+    print(res)
+    chars = []
+    freq = []
     
-    newNode = Node(left.freq + right.freq, left.symbol + right.symbol, left, right)
+    for i in res:
+        chars.append(i)
+        freq.append(res[i])
+    nodes = []
     
-    heapq.heappush(nodes, newNode)
-
-printNodes(nodes[0])
+    for i in range(len(chars)):
+        heapq.heappush(nodes, node(freq[i], chars[i]))
+    
+    while len(nodes) > 1:
+        left = heapq.heappop(nodes)
+        right = heapq.heappop(nodes)
+        
+        left.huff = 0
+        right.huff = 1
+        
+        newNode = node(left.freq + right.freq, left.symbol + right.symbol, left, right)
+        heapq.heappush(nodes, newNode)
+    
+    printNodes(nodes[0])
